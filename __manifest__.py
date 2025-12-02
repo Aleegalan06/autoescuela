@@ -5,8 +5,8 @@
     'description': """
     Módulo de gestión de autoescuelas para la práctica UT03.
     """,
-    'author': "Tu nombre / vuestro grupo",
-    'website': "https://github.com/tuusuario/autoescuela",
+    'author': "Miguel Angel Guardia, David Resino, Alejandro Galan",
+    'website': "https://github.com/Aleegalan06/autoescuela",
     'category': 'Education',
     'version': '1.0',
     'application': True,

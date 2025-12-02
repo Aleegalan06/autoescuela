@@ -1,13 +1,1 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-# Alumno
-access_alumno_gestor,alumno_gestor,model_autoescuela_alumno,autoescuela.group_autoescuela_gestor,1,1,1,1
-access_alumno_director,alumno_director,model_autoescuela_alumno,autoescuela.group_autoescuela_director,1,1,1,1
-# Profesor
-access_profesor_gestor,profesor_gestor,model_autoescuela_profesor,autoescuela.group_autoescuela_gestor,1,1,1,1
-access_profesor_director,profesor_director,model_autoescuela_profesor,autoescuela.group_autoescuela_director,1,1,1,1
-# Examen
-access_examen_gestor,examen_gestor,model_autoescuela_examen,autoescuela.group_autoescuela_gestor,1,1,1,1
-access_examen_director,examen_director,model_autoescuela_examen,autoescuela.group_autoescuela_director,1,1,1,1
-# Autoescuela (solo lectura para gestor)
-access_autoescuela_gestor,autoescuela_gestor,model_autoescuela_autoescuela,autoescuela.group_autoescuela_gestor,1,0,0,0
-access_autoescuela_director,autoescuela_director,model_autoescuela_autoescuela,autoescuela.group_autoescuela_director,1,1,1,1

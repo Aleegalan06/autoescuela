@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="group_autoescuela_gestor" model="res.groups">
+        <field name="name">Gestor Autoescuela</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    
+    <record id="group_autoescuela_director" model="res.groups">
+        <field name="name">Director Autoescuela</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4, ref('autoescuela.group_autoescuela_gestor'))]"/>
+    </record>
+</odoo>

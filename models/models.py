@@ -22,26 +22,12 @@ class Autoescuela(models.Model):
     contacto = fields.Char(string="Teléfono de contacto")
     # Relación 1 (autoescuela) a N (profesores)
     # En el otro modelo, la FK es autoescuela_id
-    profesor_ids = fields.One2many(
-        'autoescuela.profesor',
-        'autoescuela_id',
-        string="Profesores"
-    )
+    profesor_ids = fields.One2many('autoescuela.profesor', 'autoescuela_id', string="Profesores")
     # Relación 1 (autoescuela) a N (alumnos)
-    alumno_ids = fields.One2many(
-        'autoescuela.alumno',
-        'autoescuela_id',
-        string="Alumnos"
-    )
+    alumno_ids = fields.One2many('autoescuela.alumno', 'autoescuela_id', string="Alumnos")
     # Relación N a N entre autoescuela y examen
     # autoescuela_examen_rel es la tabla intermedia
-    examen_ids = fields.Many2many(
-        'autoescuela.examen',
-        'autoescuela_examen_rel',  # nombre tabla relación
-        'autoescuela_id',          # campo FK a autoescuela en la tabla relación
-        'examen_id',               # campo FK a examen en la tabla relación
-        string="Exámenes"
-    )
+    examen_ids = fields.Many2many('autoescuela.examen', 'autoescuela_examen_rel', 'autoescuela_id', 'examen_id', "string="Exámenes")
 
 # -----------------------------
 # MODELO PROFESOR
@@ -58,32 +44,15 @@ class Profesor(models.Model):
     # Matrícula del coche
     matricula = fields.Char()
     # Relación N (profesores) a 1 (autoescuela)
-    autoescuela_id = fields.Many2one(
-        'autoescuela.autoescuela',
-        string="Autoescuela"
-    )
+    autoescuela_id = fields.Many2one('autoescuela.autoescuela', string="Autoescuela")
     # Fecha de incorporación a la autoescuela
     incorporacion = fields.Date(string="Fecha incorporación")
     # Campo calculado de años de antigüedad
-    antiguedad = fields.Integer(
-        string="Años antigüedad",
-        compute='_compute_antiguedad',  # método que calcula el valor
-        store=True                      # se guarda en BD (no solo en memoria)
-    )
+    antiguedad = fields.Integer(string="Años antigüedad", compute='_compute_antiguedad', store=True)
     # Relación 1 (profesor) a N (alumnos)
-    alumno_ids = fields.One2many(
-        'autoescuela.alumno',
-        'profesor_id',
-        string="Alumnos"
-    )
+    alumno_ids = fields.One2many('autoescuela.alumno', 'profesor_id', string="Alumnos" )
     # Restricciones SQL a nivel de base de datos
-    _sql_constraints = [
-        (
-            'profesor_dni_uniq',      # nombre de la restricción
-            'unique (dni)',           # condición SQL
-            'No se pueden repetir DNIs de profesor.'  # mensaje de error
-        ),
-    ]
+    _sql_constraints = [('profesor_dni_uniq', 'unique (dni)', 'No se pueden repetir DNIs de profesor.'),]
     # Decorador que indica que este método recalcula el campo "antiguedad"
     # cuando cambie el campo "incorporacion"
     @api.depends('incorporacion')
@@ -112,31 +81,13 @@ class Alumno(models.Model):
     # Número de matrícula de la autoescuela
     matricula = fields.Char(string="Número de matrícula")
     # N (alumnos) a 1 (autoescuela)
-    autoescuela_id = fields.Many2one(
-        'autoescuela.autoescuela',
-        string="Autoescuela"
-    )
+    autoescuela_id = fields.Many2one('autoescuela.autoescuela', string="Autoescuela")
     # N (alumnos) a 1 (profesor)
-    profesor_id = fields.Many2one(
-        'autoescuela.profesor',
-        string="Profesor"
-    )
+    profesor_id = fields.Many2one('autoescuela.profesor', string="Profesor")
     # N a N entre alumnos y exámenes (un alumno puede hacer varios exámenes)
-    examen_ids = fields.Many2many(
-        'autoescuela.examen',
-        'alumno_examen_rel',  # tabla relación alumno-examen
-        'alumno_id',          # FK a alumno
-        'examen_id',          # FK a examen
-        string="Exámenes"
-    )
+    examen_ids = fields.Many2many('autoescuela.examen', 'alumno_examen_rel', 'alumno_id', 'examen_id', string="Exámenes")
     # Restricción para que no se repita el número de matrícula
-    _sql_constraints = [
-        (
-            'alumno_matricula_uniq',
-            'unique (matricula)',
-            'No se pueden repetir números de matrícula de alumno.'
-        ),
-    ]
+    _sql_constraints = [('alumno_matricula_uniq', 'unique (matricula)', 'No se pueden repetir números de matrícula de alumno.'),]
 
 # -----------------------------
 # MODELO EXAMEN
@@ -146,49 +97,24 @@ class Examen(models.Model):
     _description = 'Examen de autoescuela'
     # Código del examen (nombre interno), de solo lectura
     # copy=False → cuando se duplica el registro no se copia este valor
-    name = fields.Char(
-        string="Código del examen",
-        readonly=True,
-        copy=False,
-        default='Autogenerado'  # luego se podría sobreescribir con un sequence
-    )
+    name = fields.Char(string="Código del examen", readonly=True, copy=False, default='Autogenerado')
     # Fecha del examen
     fecha = fields.Date(string="Fecha examen")
     # N a N con autoescuela (mismas columnas que en el modelo Autoescuela)
-    autoescuela_ids = fields.Many2many(
-        'autoescuela.autoescuela',
-        'autoescuela_examen_rel',
-        'examen_id',
-        'autoescuela_id',
-        string="Autoescuelas asociadas"
-    )
+    autoescuela_ids = fields.Many2many('autoescuela.autoescuela', 'autoescuela_examen_rel', 'examen_id','autoescuela_id', string="Autoescuelas asociadas")
     # N (exámenes) a 1 (alumno) → este campo indica “este examen es de este alumno”
     # (aunque también tengas Many2many desde Alumno, aquí podrías guardar
     # el alumno “principal” o el que se está editando directamente)
-    alumno_id = fields.Many2one(
-        'autoescuela.alumno',
-        string="Alumno"
-    )
+    alumno_id = fields.Many2one('autoescuela.alumno', string="Alumno")
     # Moneda usada en el precio del examen
-    moneda_id = fields.Many2one(
-        'res.currency',
-        string="Moneda",
-        # default con función → se ejecuta cuando se crea el registro
-        # self.env.ref busca el registro base.EUR (moneda euro)
-        default=lambda self: self.env.ref('base.EUR')
-    )
+    # self.env.ref busca el registro base.EUR(moneda euro)
+    moneda_id = fields.Many2one('res.currency', string="Moneda", default=lambda self: self.env.ref('base.EUR'))
     # Campo monetario, enlazado a la moneda especificada en "moneda_id"
-    precio = fields.Monetary(
-        string="Precio",
-        currency_field='moneda_id'
-    )
+    precio = fields.Monetary(string="Precio", currency_field='moneda_id')
     # Número de clases que ha dado el alumno antes del examen
     clases = fields.Integer(string="Número de clases")
     # Tipo de carnet al que corresponde el examen (B, A2, C1…)
-    carnet = fields.Char(
-        string="Tipo de carnet",
-        help="Ejemplo: B, A2, C1..."
-    )
+    carnet = fields.Char(string="Tipo de carnet", help="Ejemplo: B, A2, C1...")
     # Indica si el examen se ha aprobado o no
     aprobado = fields.Boolean(string="Aprobado", default=False)
 

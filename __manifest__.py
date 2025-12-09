@@ -12,6 +12,7 @@
     'application': True,
     'depends': ['base'],
     'data': [
+        'security/autoescuela_groups.xml',
         'security/ir.model.access.csv',
         'views/templates.xml',
         'views/views.xml',

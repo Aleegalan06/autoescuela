@@ -27,7 +27,7 @@ class Autoescuela(models.Model):
     alumno_ids = fields.One2many('autoescuela.alumno', 'autoescuela_id', string="Alumnos")
     # Relación N a N entre autoescuela y examen
     # autoescuela_examen_rel es la tabla intermedia
-    examen_ids = fields.Many2many('autoescuela.examen', 'autoescuela_examen_rel', 'autoescuela_id', 'examen_id', "string="Exámenes")
+    examen_ids = fields.Many2many('autoescuela.examen', 'autoescuela_examen_rel', 'autoescuela_id', 'examen_id', string="Exámenes")
 
 # -----------------------------
 # MODELO PROFESOR
@@ -85,7 +85,7 @@ class Alumno(models.Model):
     # N (alumnos) a 1 (profesor)
     profesor_id = fields.Many2one('autoescuela.profesor', string="Profesor")
     # N a N entre alumnos y exámenes (un alumno puede hacer varios exámenes)
-    examen_ids = fields.Many2many('autoescuela.examen', 'alumno_examen_rel', 'alumno_id', 'examen_id', string="Exámenes")
+    examen_ids = fields.Many2many('autoescuela.examen', 'alumno_examen_rel', 'alumno_id', 'examen_id', string="Examenes")
     # Restricción para que no se repita el número de matrícula
     _sql_constraints = [('alumno_matricula_uniq', 'unique (matricula)', 'No se pueden repetir números de matrícula de alumno.'),]
 

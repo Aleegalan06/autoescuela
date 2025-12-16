@@ -13,11 +13,12 @@
     'depends': ['base'],
     'data': [
         'security/ir.model.access.csv',
+        'data/autoescuela_sequence.xml',
         'views/templates.xml',
         'views/views.xml',
     ],
     'demo': [
-        'demo/demo.xml',
+        #'demo/demo.xml',
     ],
 }
 

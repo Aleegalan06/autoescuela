@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- TREE -->
+    <record id="view_autoescuela_tree" model="ir.ui.view">
+        <field name="name">autoescuela.autoescuela.tree</field>
+        <field name="model">autoescuela.autoescuela</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="direccion"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORM -->
+    <record id="view_autoescuela_form" model="ir.ui.view">
+        <field name="name">autoescuela.autoescuela.form</field>
+        <field name="model">autoescuela.autoescuela</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="direccion"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

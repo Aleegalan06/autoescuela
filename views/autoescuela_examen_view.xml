@@ -35,7 +35,7 @@
               <field name="name" readonly="1"/>
               <field name="fecha"/>
               <field name="alumno_id"/>
-              <field name="autoescuela_ids"/>
+              <field name="autoescuela_ids" widget="many2many_tags"/>
               <field name="moneda_id"/>
               <field name="precio"/>
               <field name="clases"/>

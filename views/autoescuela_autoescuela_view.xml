@@ -33,7 +33,7 @@
                 <field name="alumno_ids"/>
               </page>
               <page string="Exámenes">
-                <field name="examen_ids"/>
+                <field name="examen_ids" widget="many2many_tags"/>
               </page>
             </notebook>
           </sheet>

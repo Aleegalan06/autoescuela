@@ -117,4 +117,3 @@ class Examen(models.Model):
     carnet = fields.Char(string="Tipo de carnet", help="Ejemplo: B, A2, C1...")
     # Indica si el examen se ha aprobado o no
     aprobado = fields.Boolean(string="Aprobado", default=False)
-

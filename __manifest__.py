@@ -14,6 +14,11 @@
     'data': [
         'security/autoescuela_groups.xml',
         'security/ir.model.access.csv',
+        'views/autoescuela_menus.xml',
+        'views/autoescuela_views.xml',
+        'views/profesor_views.xml',
+        'views/alumno_views.xml',
+        'views/examen_views.xml',
         'views/templates.xml',
         'views/views.xml',
     ],

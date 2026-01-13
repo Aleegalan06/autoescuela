@@ -22,7 +22,7 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="direccion"/>
+                        <field name="domicilio"/>
                     </group>
                 </sheet>
             </form>

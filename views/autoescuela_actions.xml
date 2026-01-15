@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- ========================================================= -->
+        <!-- ACCIONES -->
+        <!-- ========================================================= -->
+
+        <record id="action_autoescuela" model="ir.actions.act_window">
+            <field name="name">Autoescuelas</field>
+            <field name="res_model">autoescuela.autoescuela</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_profesor" model="ir.actions.act_window">
+            <field name="name">Profesores</field>
+            <field name="res_model">autoescuela.profesor</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_alumno" model="ir.actions.act_window">
+            <field name="name">Alumnos</field>
+            <field name="res_model">autoescuela.alumno</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="action_examen" model="ir.actions.act_window">
+            <field name="name">Exámenes</field>
+            <field name="res_model">autoescuela.examen</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+
+    </data>
+</odoo>

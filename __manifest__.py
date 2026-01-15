@@ -20,6 +20,7 @@
         'views/examen_views.xml',
         'views/templates.xml',
         'views/views.xml',
+        'views/autoescuela_actions.xml',
         'views/autoescuela_menus.xml',
 
     ],

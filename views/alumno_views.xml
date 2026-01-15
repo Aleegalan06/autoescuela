@@ -9,7 +9,6 @@
             <tree>
                 <field name="name"/>
                 <field name="dni"/>
-                <field name="carnet"/>
             </tree>
         </field>
     </record>
@@ -24,7 +23,6 @@
                     <group>
                         <field name="name"/>
                         <field name="dni"/>
-                        <field name="carnet"/>
                     </group>
                 </sheet>
             </form>

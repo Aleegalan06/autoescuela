@@ -30,7 +30,7 @@
     </record>
     <!-- Este filtro se implementa mediante una search view para el modelo autoescuela.examen
         Sirve para que al abrir la lista o el calendario, se muestren solo los exámenes de alumnos
-        cuyo carnet está activado-->
+        cuyo carnet está activado
     <record id="view_examen_search" model="ir.ui.view">
         <field name="name">autoescuela.examen.search</field>
         <field name="model">autoescuela.examen</field>
@@ -42,7 +42,7 @@
                         default="1"/>
             </search>
         </field>
-    </record>
+    </record>-->
 
 
 </odoo>

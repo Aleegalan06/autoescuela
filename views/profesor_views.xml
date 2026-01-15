@@ -28,5 +28,11 @@
             </form>
         </field>
     </record>
+    <!-- ACTION -->
+    <record id="action_profesor" model="ir.actions.act_window">
+        <field name="name">Profesores</field>
+        <field name="res_model">autoescuela.profesor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
 </odoo>

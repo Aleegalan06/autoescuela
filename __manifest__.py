@@ -19,7 +19,6 @@
         'views/alumno_views.xml',
         'views/examen_views.xml',
         'views/templates.xml',
-        'views/views.xml',
         'views/autoescuela_menus.xml',
 
     ],

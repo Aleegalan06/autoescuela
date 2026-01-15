@@ -43,6 +43,12 @@
             </search>
         </field>
     </record>-->
+    <!-- ACTION -->
+    <record id="action_examen" model="ir.actions.act_window">
+        <field name="name">Exámenes</field>
+        <field name="res_model">autoescuela.examen</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
 
 
 </odoo>

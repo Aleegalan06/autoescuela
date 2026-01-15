@@ -38,8 +38,8 @@
         name="Autoescuela"
         web_icon="autoescuela,static/description/icon.png"
         sequence="10"
-        groups="autoescuela.group_autoescuela_gestor,autoescuela.group_autoescuela_director"
     />
+    <!-- groups="autoescuela.group_autoescuela_gestor,autoescuela.group_autoescuela_director" -->
 
     <!-- ========================================================= -->
     <!-- SUBMENÚS -->

@@ -22,7 +22,6 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="codigo"/>
                         <field name="alumno_id"/>
                         <field name="fecha"/>
                     </group>

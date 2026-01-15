@@ -7,7 +7,6 @@
         <field name="model">autoescuela.examen</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="codigo"/>
                 <field name="alumno_id"/>
                 <field name="fecha"/>
             </tree>

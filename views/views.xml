@@ -31,16 +31,5 @@
         }
       </field>
     </record>
-    <!-- Top menu item -->
-    <menuitem name="autoescuela" id="autoescuela.menu_root"/>
-    <!-- menu categories -->
-    <menuitem name="Menu 1" id="autoescuela.menu_1" parent="autoescuela.menu_root"/>
-    <menuitem name="Menu 2" id="autoescuela.menu_2" parent="autoescuela.menu_root"/>
-    <!-- actions -->
-    <menuitem name="List" id="autoescuela.menu_1_list" parent="autoescuela.menu_1"
-              action="autoescuela.action_window"/>
-    <menuitem name="Server to list" id="autoescuela" parent="autoescuela.menu_2"
-              action="autoescuela.action_server"/>
-
   </data>
 </odoo>

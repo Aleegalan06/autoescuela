@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- TREE -->
+    <record id="view_profesor_tree" model="ir.ui.view">
+        <field name="name">autoescuela.profesor.tree</field>
+        <field name="model">autoescuela.profesor</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="dni"/>
+                <field name="autoescuela_id"/>
+                <field name="antiguedad"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- FORM -->
+    <record id="view_profesor_form" model="ir.ui.view">
+        <field name="name">autoescuela.profesor.form</field>
+        <field name="model">autoescuela.profesor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="dni"/>
+                        <field name="autoescuela_id"/>
+                    </group>
+
+                    <group>
+                        <field name="incorporacion"/>
+                        <field name="antiguedad" readonly="1"/>
+                    </group>
+
+                    <group>
+                        <field name="coche"/>
+                        <field name="matricula"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Alumnos">
+                            <field name="alumno_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="dni"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_profesor" model="ir.actions.act_window">
+        <field name="name">Profesores</field>
+        <field name="res_model">autoescuela.profesor</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

@@ -36,10 +36,12 @@
         </form>
       </field>
     </record>
-    <record id="action_autoescuela_alumno" model="ir.actions.act_window">
-      <field name="name">Alumnos</field>
-      <field name="res_model">autoescuela.alumno</field>
-      <field name="view_mode">tree,form</field>
-    </record>
+<record id="action_autoescuela_alumno" model="ir.actions.act_window">
+    <field name="name">Alumnos</field>
+    <field name="res_model">autoescuela.alumno</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_id" ref="view_autoescuela_alumno_form"/>
+</record>
+
   </data>
 </odoo>

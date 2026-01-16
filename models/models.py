@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api
+from odoo import models, fields, api, _
 from datetime import date
 
 # -----------------------------
@@ -145,13 +145,7 @@ class Examen(models.Model):
     _name = 'autoescuela.examen'
     _description = 'Examen de autoescuela'
     # Código del examen (nombre interno), de solo lectura
-    # copy=False → cuando se duplica el registro no se copia este valor
-    name = fields.Char(
-        string="Código del examen",
-        readonly=True,
-        copy=False,
-        default='Autogenerado'  # luego se podría sobreescribir con un sequence
-    )
+    name = fields.Char("Código del Examen", default=lambda self: _('Autogenerado'), copy=False, readonly=True, tracking=True)
     # Fecha del examen
     fecha = fields.Date(string="Fecha examen")
     # N a N con autoescuela (mismas columnas que en el modelo Autoescuela)
@@ -165,30 +159,26 @@ class Examen(models.Model):
     # N (exámenes) a 1 (alumno) → este campo indica “este examen es de este alumno”
     # (aunque también tengas Many2many desde Alumno, aquí podrías guardar
     # el alumno “principal” o el que se está editando directamente)
-    alumno_id = fields.Many2one(
-        'autoescuela.alumno',
-        string="Alumno"
-    )
+    alumno_id = fields.Many2one('autoescuela.alumno', string="Alumno")
     # Moneda usada en el precio del examen
     moneda_id = fields.Many2one(
         'res.currency',
         string="Moneda",
         # default con función → se ejecuta cuando se crea el registro
         # self.env.ref busca el registro base.EUR (moneda euro)
-        default=lambda self: self.env.ref('base.EUR')
-    )
+        default=lambda self: self.env.ref('base.EUR'))
     # Campo monetario, enlazado a la moneda especificada en "moneda_id"
-    precio = fields.Monetary(
-        string="Precio",
-        currency_field='moneda_id'
-    )
+    precio = fields.Monetary(string="Precio", currency_field='moneda_id')
     # Número de clases que ha dado el alumno antes del examen
     clases = fields.Integer(string="Número de clases")
     # Tipo de carnet al que corresponde el examen (B, A2, C1…)
-    carnet = fields.Char(
-        string="Tipo de carnet",
-        help="Ejemplo: B, A2, C1..."
-    )
+    carnet = fields.Char(string="Tipo de carnet", help="Ejemplo: B, A2, C1...")
     # Indica si el examen se ha aprobado o no
     aprobado = fields.Boolean(string="Aprobado", default=False)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals['name'] = self.env['ir.sequence'].next_by_code('autoescuela.examen')
+        return super().create(vals_list)
+
 

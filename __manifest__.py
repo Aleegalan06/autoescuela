@@ -14,11 +14,22 @@
     'data': [
         'security/autoescuela_groups.xml',
         'security/ir.model.access.csv',
+        'data/autoescuela_sequence.xml',
+        'views/autoescuela_views.xml',
+        'views/profesor_views.xml',
+        'views/alumno_views.xml',
+        'views/examen_views.xml',
         'views/templates.xml',
         'views/views.xml',
+        'views/autoescuela_actions.xml',
+        'views/autoescuela_menus.xml',
+        'reports/autoescuela_alumno_report.xml',
+        'reports/autoescuela_autoescuela_report.xml',
+        'reports/autoescuela_examen_report.xml',
+        'reports/autoescuela_profesor_report.xml',
     ],
     'demo': [
-        'demo/demo.xml',
+        #'demo/demo.xml',
     ],
 }
 

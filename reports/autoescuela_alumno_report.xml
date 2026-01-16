@@ -1,78 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
   <data>
-    <report
-        id="report_autoescuela_alumno_html"
-        model="autoescuela.alumno"
-        string="Ficha de Alumno (HTML)"
-        report_type="qweb-html"
-        name="autoescuela.report_autoescuela_alumno"
-        file="autoescuela.report_autoescuela_alumno"
-    />
-    <report
-        id="report_autoescuela_alumno_pdf"
-        model="autoescuela.alumno"
-        string="Ficha de Alumno"
-        report_type="qweb-pdf"
-        name="autoescuela.report_autoescuela_alumno"
-        file="autoescuela.report_autoescuela_alumno"
-    />
+    <record id="action_report_autoescuela_alumno_pdf" model="ir.actions.report">
+      <field name="name">Ficha de Alumno</field>
+      <field name="model">autoescuela.alumno</field>
+      <field name="report_type">qweb-html</field>
+      <field name="report_name">autoescuela.report_autoescuela_alumno</field>
+      <field name="report_file">autoescuela.report_autoescuela_alumno</field>
+      <field name="binding_model_id" ref="model_autoescuela_alumno"/>
+      <field name="binding_type">report</field>
+    </record>
     <template id="report_autoescuela_alumno">
-      <t t-call="web.external_layout">
+      <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-          <div class="page">
-            <h2>Información del alumno</h2>
-            <table class="table table-sm">
-              <tbody>
-                <tr>
-                  <th>Nombre:</th>
-                  <td><span t-field="o.name"/></td>
-                </tr>
-                <tr>
-                  <th>DNI:</th>
-                  <td><span t-field="o.dni"/></td>
-                </tr>
-                <tr>
-                  <th>Domicilio:</th>
-                  <td><span t-field="o.domicilio"/></td>
-                </tr>
-                <tr>
-                  <th>N.º Matrícula:</th>
-                  <td><span t-field="o.matricula"/></td>
-                </tr>
-                <tr>
-                  <th>Autoescuela:</th>
-                  <td><span t-field="o.autoescuela_id"/></td>
-                </tr>
-                <tr>
-                  <th>Profesor:</th>
-                  <td><span t-field="o.profesor_id"/></td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Exámenes</h3>
-            <table class="table table-sm">
-              <thead>
-                <tr>
-                  <th>Código examen</th>
-                  <th>Fecha</th>
-                  <th>Tipo carnet</th>
-                  <th>Precio</th>
-                  <th>Aprobado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr t-foreach="o.examen_ids" t-as="ex">
-                  <td><span t-field="ex.name"/></td>
-                  <td><span t-field="ex.fecha"/></td>
-                  <td><span t-field="ex.carnet"/></td>
-                  <td><span t-field="ex.precio"/></td>
-                  <td>
-                    <span t-esc="ex.aprobado and 'Sí' or 'No'"/>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <t t-call="web.external_layout">
+            <div class="page">
+              <h2 style="margin-top:20px; margin-bottom:10px;">
+                <span t-field="o.name"/>
+              </h2>
+              <p>DNI:<span t-field="o.dni"/></p>
+              <p>Domicilio:<span t-field="o.domicilio"/></p>
+              <p>Matrícula:<span t-field="o.matricula"/></p>
+              <p>Autoescuela:<span t-field="o.autoescuela_id"/></p>
+              <p>Profesor:<span t-field="o.profesor_id"/></p>
+              <div style="border-bottom:3px solid #ccc; margin:25px 0;"></div>
+              <h3>Exámenes</h3>
+              <table width="100%" style="border-collapse:collapse; margin-top:10px;">
+                <thead>
+                  <tr style="border-bottom:2px solid #000;">
+                    <th align="left">Nombre</th>
+                    <th align="left">Fecha</th>
+                    <th align="right">Precio</th>
+                    <th align="left">Moneda</th>
+                    <th align="right">Clases</th>
+                    <th align="left">Carnet</th>
+                    <th align="left">Aprobado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-if="o.examen_ids">
+                    <tr t-foreach="o.examen_ids" t-as="ex" style="border-bottom:1px solid #ddd;">
+                      <td><span t-field="ex.name"/></td>
+                      <td><span t-field="ex.fecha"/></td>
+                      <td align="right"><span t-field="ex.precio"/></td>
+                      <td><span t-field="ex.moneda_id.name"/></td>
+                      <td align="right"><span t-field="ex.clases"/></td>
+                      <td><span t-field="ex.carnet"/></td>
+                      <td>
+                        <t t-esc="ex.aprobado and 'Sí' or 'No'"/>
+                      </td>
+                    </tr>
+                  </t>
+                  <t t-else="">
+                    <tr>
+                      <td colspan="7">No hay exámenes registrados.</td>
+                    </tr>
+                  </t>
+                </tbody>
+              </table>
+            </div>
+          </t>
         </t>
       </t>
     </template>

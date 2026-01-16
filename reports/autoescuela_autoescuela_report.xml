@@ -1,85 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
   <data>
-    <report
-        id="report_autoescuela_autoescuela_html"
-        model="autoescuela.autoescuela"
-        string="Ficha de Autoescuela (HTML)"
-        report_type="qweb-html"
-        name="autoescuela.report_autoescuela_autoescuela"
-        file="autoescuela.report_autoescuela_autoescuela"
-    />
-    <report
-        id="report_autoescuela_autoescuela_pdf"
-        model="autoescuela.autoescuela"
-        string="Ficha de Autoescuela"
-        report_type="qweb-pdf"
-        name="autoescuela.report_autoescuela_autoescuela"
-        file="autoescuela.report_autoescuela_autoescuela"
-    />
+    <record id="action_report_autoescuela_autoescuela_pdf" model="ir.actions.report">
+      <field name="name">Ficha de Autoescuela</field>
+      <field name="model">autoescuela.autoescuela</field>
+      <field name="report_type">qweb-html</field>
+      <field name="report_name">autoescuela.report_autoescuela_autoescuela</field>
+      <field name="report_file">autoescuela.report_autoescuela_autoescuela</field>
+      <field name="binding_model_id" ref="model_autoescuela_autoescuela"/>
+      <field name="binding_type">report</field>
+      <field name="print_report_name">'Ficha_Autoescuela_%s' % (object.name or '')</field>
+    </record>
     <template id="report_autoescuela_autoescuela">
-      <t t-call="web.external_layout">
+      <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-          <div class="page">
-            <h2>Información de la autoescuela</h2>
-            <table class="table table-sm">
-              <tbody>
-                <tr>
-                  <th>Nombre:</th>
-                  <td><span t-field="o.name"/></td>
-                </tr>
-                <tr>
-                  <th>Domicilio:</th>
-                  <td><span t-field="o.domicilio"/></td>
-                </tr>
-                <tr>
-                  <th>Localidad:</th>
-                  <td><span t-field="o.localidad"/></td>
-                </tr>
-                <tr>
-                  <th>Provincia:</th>
-                  <td><span t-field="o.provincia"/></td>
-                </tr>
-                <tr>
-                  <th>Contacto:</th>
-                  <td><span t-field="o.contacto"/></td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Profesores</h3>
-            <table class="table table-sm">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>DNI</th>
-                  <th>Matrícula</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr t-foreach="o.profesor_ids" t-as="prof">
-                  <td><span t-field="prof.name"/></td>
-                  <td><span t-field="prof.dni"/></td>
-                  <td><span t-field="prof.matricula"/></td>
-                </tr>
-              </tbody>
-            </table>
-            <h3>Alumnos</h3>
-            <table class="table table-sm">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>DNI</th>
-                  <th>N.º Matrícula</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr t-foreach="o.alumno_ids" t-as="alu">
-                  <td><span t-field="alu.name"/></td>
-                  <td><span t-field="alu.dni"/></td>
-                  <td><span t-field="alu.matricula"/></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <t t-call="web.external_layout">
+            <div class="page">
+              <h2 style="margin: 0 0 10px 0;">
+                <span t-field="o.name"/>
+              </h2>
+              <p style="margin: 0 0 6px 0;"><strong>Domicilio:</strong> <span t-field="o.domicilio"/></p>
+              <p style="margin: 0 0 6px 0;"><strong>Localidad:</strong> <span t-field="o.localidad"/></p>
+              <p style="margin: 0 0 6px 0;"><strong>Provincia:</strong> <span t-field="o.provincia"/></p>
+              <p style="margin: 0 0 6px 0;"><strong>Contacto:</strong> <span t-field="o.contacto"/></p>
+              <div style="border-bottom: 4px solid #cfcfcf; margin: 18px 0;"></div>
+              <h3 style="margin: 0 0 8px 0;">Exámenes</h3>
+              <table width="100%" style="border-collapse: collapse;">
+                <thead>
+                  <tr style="border-bottom: 2px solid #000;">
+                    <th align="left" style="padding: 6px 4px;">Nombre</th>
+                    <th align="left" style="padding: 6px 4px;">Fecha</th>
+                    <th align="right" style="padding: 6px 4px;">Precio</th>
+                    <th align="left" style="padding: 6px 4px;">Moneda</th>
+                    <th align="right" style="padding: 6px 4px;">Clases</th>
+                    <th align="left" style="padding: 6px 4px;">Carnet</th>
+                    <th align="left" style="padding: 6px 4px;">Aprobado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-if="o.examen_ids">
+                    <tr t-foreach="o.examen_ids" t-as="ex" style="border-bottom: 1px solid #e0e0e0;">
+                      <td style="padding: 6px 4px;"><span t-field="ex.name"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="ex.fecha"/></td>
+                      <td style="padding: 6px 4px;" align="right"><span t-field="ex.precio"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="ex.moneda_id.name"/></td>
+                      <td style="padding: 6px 4px;" align="right"><span t-field="ex.clases"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="ex.carnet"/></td>
+                      <td style="padding: 6px 4px;">
+                        <t t-esc="ex.aprobado and 'Sí' or 'No'"/>
+                      </td>
+                    </tr>
+                  </t>
+                  <t t-else="">
+                    <tr>
+                      <td colspan="7" style="padding: 6px 4px;">No hay exámenes registrados.</td>
+                    </tr>
+                  </t>
+                </tbody>
+              </table>
+              <div style="border-bottom: 4px solid #cfcfcf; margin: 18px 0;"></div>
+              <h3 style="margin: 0 0 8px 0;">Profesores asignados</h3>
+              <table width="100%" style="border-collapse: collapse;">
+                <thead>
+                  <tr style="border-bottom: 2px solid #000;">
+                    <th align="left" style="padding: 6px 4px;">Nombre</th>
+                    <th align="left" style="padding: 6px 4px;">DNI</th>
+                    <th align="left" style="padding: 6px 4px;">Coche</th>
+                    <th align="left" style="padding: 6px 4px;">Matrícula</th>
+                    <th align="left" style="padding: 6px 4px;">Autoescuela</th>
+                    <th align="left" style="padding: 6px 4px;">Incorporación</th>
+                    <th align="left" style="padding: 6px 4px;">Antigüedad</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <t t-if="o.profesor_ids">
+                    <tr t-foreach="o.profesor_ids" t-as="p" style="border-bottom: 1px solid #e0e0e0;">
+                      <td style="padding: 6px 4px;"><span t-field="p.name"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="p.dni"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="p.coche"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="p.matricula"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="o.name"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="p.incorporacion"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="p.antiguedad"/></td>
+                    </tr>
+                  </t>
+                  <t t-else="">
+                    <tr>
+                      <td colspan="7" style="padding: 6px 4px;">No hay profesores asignados.</td>
+                    </tr>
+                  </t>
+                </tbody>
+              </table>
+              <div style="border-bottom: 4px solid #cfcfcf; margin: 18px 0;"></div>
+              <h3 style="margin: 0 0 8px 0;">Alumnos matriculados</h3>
+              <table width="100%" style="border-collapse: collapse;">
+                <thead>
+                  <tr style="border-bottom: 2px solid #000;">
+                    <th align="left" style="padding: 6px 4px;">Nombre</th>
+                    <th align="left" style="padding: 6px 4px;">DNI</th>
+                    <th align="left" style="padding: 6px 4px;">Autoescuela</th>
+                    <th align="left" style="padding: 6px 4px;">Profesor</th>
+                    <th align="left" style="padding: 6px 4px;">Domicilio</th>
+                    <th align="left" style="padding: 6px 4px;">Matrícula</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <t t-if="o.alumno_ids">
+                    <tr t-foreach="o.alumno_ids" t-as="a" style="border-bottom: 1px solid #e0e0e0;">
+                      <td style="padding: 6px 4px;"><span t-field="a.name"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="a.dni"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="o.name"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="a.profesor_id"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="a.domicilio"/></td>
+                      <td style="padding: 6px 4px;"><span t-field="a.matricula"/></td>
+                    </tr>
+                  </t>
+                  <t t-else="">
+                    <tr>
+                      <td colspan="6" style="padding: 6px 4px;">No hay alumnos matriculados.</td>
+                    </tr>
+                  </t>
+                </tbody>
+              </table>
+
+            </div>
+          </t>
         </t>
       </t>
     </template>

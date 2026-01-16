@@ -1,69 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
   <data>
-    <report
-        id="report_autoescuela_examen_html"
-        model="autoescuela.examen"
-        string="Ficha de Examen (HTML)"
-        report_type="qweb-html"
-        name="autoescuela.report_autoescuela_examen"
-        file="autoescuela.report_autoescuela_examen"
-    />
-    <report
-        id="report_autoescuela_examen_pdf"
-        model="autoescuela.examen"
-        string="Ficha de Examen"
-        report_type="qweb-pdf"
-        name="autoescuela.report_autoescuela_examen"
-        file="autoescuela.report_autoescuela_examen"
-    />
+    <record id="action_report_autoescuela_examen_pdf" model="ir.actions.report">
+      <field name="name">Ficha de Examen</field>
+      <field name="model">autoescuela.examen</field>
+      <field name="report_type">qweb-html</field>
+      <field name="report_name">autoescuela.report_autoescuela_examen</field>
+      <field name="report_file">autoescuela.report_autoescuela_examen</field>
+      <field name="binding_model_id" ref="model_autoescuela_examen"/>
+      <field name="binding_type">report</field>
+      <field name="print_report_name">'Ficha_Examen_%s' % (object.name or '')</field>
+    </record>
     <template id="report_autoescuela_examen">
-      <t t-call="web.external_layout">
+      <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-          <div class="page">
-            <h2>Información del examen</h2>
-            <table class="table table-sm">
-              <tbody>
-                <tr>
-                  <th>Código del examen:</th>
-                  <td><span t-field="o.name"/></td>
-                </tr>
-                <tr>
-                  <th>Fecha:</th>
-                  <td><span t-field="o.fecha"/></td>
-                </tr>
-                <tr>
-                  <th>Alumno:</th>
-                  <td><span t-field="o.alumno_id"/></td>
-                </tr>
-                <tr>
-                  <th>Autoescuelas asociadas:</th>
-                  <td>
-                    <span t-foreach="o.autoescuela_ids" t-as="a" t-separator=", ">
-                      <span t-field="a.name"/>
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Tipo de carnet:</th>
-                  <td><span t-field="o.carnet"/></td>
-                </tr>
-                <tr>
-                  <th>Número de clases:</th>
-                  <td><span t-field="o.clases"/></td>
-                </tr>
-                <tr>
-                  <th>Precio:</th>
-                  <td><span t-field="o.precio"/></td>
-                </tr>
-                <tr>
-                  <th>Aprobado:</th>
-                  <td>
-                    <span t-esc="o.aprobado and 'Sí' or 'No'"/>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          <t t-call="web.external_layout">
+            <div class="page">
+              <h2 style="margin: 0 0 10px 0;">
+                Examen <span t-field="o.name"/>
+              </h2>
+              <p style="margin: 0 0 6px 0;"><strong>Fecha:</strong> <span t-field="o.fecha"/></p>
+              <p style="margin: 0 0 6px 0;"><strong>Alumno:</strong> <span t-field="o.alumno_id"/></p>
+              <p style="margin: 0 0 6px 0;">
+                <strong>Autoescuelas asociadas:</strong>
+                <t t-if="o.autoescuela_ids">
+                  <t t-foreach="o.autoescuela_ids" t-as="a" t-separator=", ">
+                    <span t-field="a.name"/>
+                  </t>
+                </t>
+                <t t-else="">
+                  Ninguna
+                </t>
+              </p>
+              <p style="margin: 0 0 6px 0;"><strong>Tipo de carnet:</strong> <span t-field="o.carnet"/></p>
+              <p style="margin: 0 0 6px 0;"><strong>Número de clases:</strong> <span t-field="o.clases"/></p>
+              <p style="margin: 0 0 6px 0;"><strong>Precio:</strong> <span t-field="o.precio"/></p>
+              <p style="margin: 0 0 6px 0;"><strong>Moneda:</strong> <span t-field="o.moneda_id.name"/></p>
+              <p style="margin: 0 0 6px 0;">
+                <strong>Aprobado:</strong>
+                <t t-esc="o.aprobado and 'Sí' or 'No'"/>
+              </p>
+              <div style="border-bottom: 4px solid #cfcfcf; margin: 18px 0;"></div>
+              <p style="margin: 0;">
+                <strong>Resumen:</strong>
+                Examen <t t-esc="o.carnet or ''"/> con precio <t t-esc="o.precio or ''"/>.
+              </p>
+            </div>
+          </t>
         </t>
       </t>
     </template>
